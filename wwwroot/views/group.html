@@ -1,0 +1,169 @@
+﻿<div class="panel" ng-controller="groupController">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Search criteria
+        </div>
+        <div class="panel-body container">
+            <div class="row form-inline">
+                <span class="col-md-2">Select group</span>
+                <select ng-init="selectedGroupID='Ready'"
+                        ng-model="selectedGroupID"
+                        ng-options="g as g for g in groups"
+                        ng-change="selectGroup(selectedGroupID)"
+                        class="col-md-2 btn btn-default text-capitalize"></select>
+                <span class="col-md-2">Number of year</span>
+                <select ng-init="numYears=3"
+                        ng-model="numYears"
+                        ng-options="values for values in [8,7,6,5,4,3,2,1]"
+                        class="col-md-2 btn btn-default"></select>
+            </div>
+            <div class="row row10">
+                <div class="col-md-2">
+                    <span>Filter</span>
+                </div>
+                <div class="col-md-10">
+                    <div class="row row10">
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PE" />PE</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.NetProfit" />NetProfit</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.Growth" />Growth</label>
+                    </div>
+                    <div class="row row10">
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.Price3MCal" />3M Price Calculation</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.Price6MCal" />6M Price Calculation</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.Price1YCal" />1Y Price Calculation</label>
+                    </div>
+                    <div class="row row10">
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PEG" />PEG</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PEDiff" />PE Diff Percentage</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Quote</th>
+                <th ng-show="show.PE"
+                    ng-repeat="p in [summary.peYear.min,summary.peYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PE {{p}}</th>
+                <th ng-show="show.NetProfit" ng-repeat="n in [summary.netProfitYear.min,summary.netProfitYear.max]|makeRange|limitTo:numYears">N {{n}}</th>
+                <th ng-show="show.Growth"
+                    ng-repeat="g in [summary.growthYear.min,summary.growthYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">G {{g}}</th>
+                <th ng-show="show.PEG"
+                    ng-repeat="p in [summary.pegYear.min,summary.pegYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PEG {{p}}</th>
+                <th ng-show="show.PEDiff"
+                    ng-repeat="p in [summary.peDiffYear.min,summary.peDiffYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PE diff {{p}}</th>
+                <th>Last</th>
+                <th class="borderLeft" ng-show="show.Price3MCal">Avg 3M</th>
+                <th ng-show="show.Price3MCal">Diff Max 3M</th>
+                <th ng-show="show.Price3MCal">Diff Avg 3M</th>
+                <th class="borderRight" ng-show="show.Price3MCal">Diff Min 3M</th>
+                <th class="borderLeft" ng-show="show.Price6MCal">Avg 6M</th>
+                <th ng-show="show.Price6MCal">Diff Max 6M</th>
+                <th ng-show="show.Price6MCal">Diff Avg 6M</th>
+                <th class="borderRight" ng-show="show.Price6MCal">Diff Min 6M</th>
+                <th class="borderLeft" ng-show="show.Price1YCal">Avg 1Y</th>
+                <th ng-show="show.Price1YCal">Diff Max 1Y</th>
+                <th ng-show="show.Price1YCal">Diff Avg 1Y</th>
+                <th class="borderRight" ng-show="show.Price1YCal">Diff Min 1Y</th>
+                <th>Quote</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Quote</th>
+                <th ng-show="show.PE"
+                    ng-repeat="p in [summary.peYear.min,summary.peYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PE {{p}}</th>
+                <th ng-show="show.NetProfit" ng-repeat="n in [summary.netProfitYear.min,summary.netProfitYear.max]|makeRange|limitTo:numYears">N {{n}}</th>
+                <th ng-show="show.Growth"
+                    ng-repeat="g in [summary.growthYear.min,summary.growthYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">G {{g}}</th>
+                <th ng-show="show.PEG"
+                    ng-repeat="p in [summary.pegYear.min,summary.pegYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PEG {{p}}</th>
+                <th ng-show="show.PEDiff"
+                    ng-repeat="p in [summary.peDiffYear.min,summary.peDiffYear.max]|makeRange|limitTo:numYears"
+                    ng-class="{borderLeft:$index==0,borderRight:$index==numYears-1}">PE diff {{p}}</th>
+                <th>Last</th>
+                <th class="borderLeft" ng-show="show.Price3MCal">Avg 3M</th>
+                <th ng-show="show.Price3MCal">Diff Max 3M</th>
+                <th ng-show="show.Price3MCal">Diff Avg 3M</th>
+                <th class="borderRight" ng-show="show.Price3MCal">Diff Min 3M</th>
+                <th class="borderLeft" ng-show="show.Price6MCal">Avg 6M</th>
+                <th ng-show="show.Price6MCal">Diff Max 6M</th>
+                <th ng-show="show.Price6MCal">Diff Avg 6M</th>
+                <th class="borderRight" ng-show="show.Price6MCal">Diff Min 6M</th>
+                <th class="borderLeft" ng-show="show.Price1YCal">Avg 1Y</th>
+                <th ng-show="show.Price1YCal">Diff Max 1Y</th>
+                <th ng-show="show.Price1YCal">Diff Avg 1Y</th>
+                <th class="borderRight" ng-show="show.Price1YCal">Diff Min 1Y</th>
+                <th>Quote</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr ng-repeat="d in content" ng-class-odd="'odd'">
+                <td class="text-uppercase">{{d.quote}}</td>
+                <td ng-show="show.PE"   
+                    ng-repeat="p in d.pe|displayBlankIfNotExist:summary.peYear.min:summary.peYear.max:numYears track by $index|limitTo:numYears"
+                    ng-class="{pink:p<=0,green:p>0&&p<=10,blue:p>10&&p<=15,red:p>15,borderLeft:$index==0,borderRight:$index==numYears-1}">{{p|number:2}}</td>
+                <td ng-show="show.NetProfit" 
+                    ng-repeat="n in d.netProfit|displayBlankIfNotExist:summary.netProfitYear.min:summary.netProfitYear.max:numYears track by $index|limitTo:numYears">{{n|number:2}}</td>
+                <td ng-show="show.Growth"
+                    ng-repeat="g in d.growth|displayBlankIfNotExist:summary.growthYear.min:summary.growthYear.max:numYears track by $index|limitTo:numYears"
+                    ng-class="{pink:g<=0,green:g>0&&g<=10,blue:g>10&&g<=15,red:g>15,borderLeft:$index==0,borderRight:$index==numYears-1}">{{g|number:2}}</td>
+                <td ng-show="show.PEG"
+                    ng-repeat="p in d.peg|displayBlankIfNotExist:summary.pegYear.min:summary.pegYear.max:numYears track by $index|limitTo:numYears"
+                    ng-class="{pink:p<=0,blue:p>0&&p<=0.5,green:p>0.5&&p<=1,red:p>1,borderLeft:$index==0,borderRight:$index==numYears-1}">
+                    {{p|number:2}}
+                </td>
+                <td ng-show="show.PEDiff"
+                    ng-repeat="p in d.peDiffPercent|displayBlankIfNotExist:summary.peDiffYear.min:summary.peDiffYear.max:numYears track by $index|limitTo:numYears"
+                    ng-class="{pink:p<=0,green:p>0&&p<=20,blue:p>20,borderLeft:$index==0,borderRight:$index==numYears-1}">
+                    {{p|number:2}}%
+                </td>
+                <td>{{getPriceCal(d.priceCal,'6M','last')|number:2}}</td>
+                <td class="borderLeft" ng-show="show.Price3MCal">{{getPriceCal(d.priceCal,'3M','avg')|number:2}}</td>
+                <td ng-show="show.Price3MCal">{{getPriceCal(d.priceCal,'3M','diffMax')|number:2}}%</td>
+                <td ng-show="show.Price3MCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'3M','diffAvg'),[0,5,10],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'3M','diffAvg')|number:2}}%
+                </td>
+                <td class="borderRight"
+                    ng-show="show.Price3MCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'3M','diffMin'),[-20,-10,-5],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'3M','diffMin')|number:2}}%
+                </td>
+                <td class="borderLeft" ng-show="show.Price6MCal">{{getPriceCal(d.priceCal,'6M','avg')|number:2}}</td>
+                <td ng-show="show.Price6MCal">{{getPriceCal(d.priceCal,'6M','diffMax')|number:2}}%</td>
+                <td ng-show="show.Price6MCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'6M','diffAvg'),[0,5,10],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'6M','diffAvg')|number:2}}%
+                </td>
+                <td class="borderRight"
+                    ng-show="show.Price6MCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'6M','diffMin'),[-20,-10,-5],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'6M','diffMin')|number:2}}%
+                </td>
+                <td class="borderLeft" ng-show="show.Price1YCal">{{getPriceCal(d.priceCal,'1Y','avg')|number:2}}</td>
+                <td ng-show="show.Price1YCal">{{getPriceCal(d.priceCal,'1Y','diffMax')|number:2}}%</td>
+                <td ng-show="show.Price1YCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'1Y','diffAvg'),[0,5,10],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'1Y','diffAvg')|number:2}}%
+                </td>
+                <td class="borderRight"
+                    ng-show="show.Price1YCal"
+                    ng-class="determineColor(getPriceCal(d.priceCal,'1Y','diffMin'),[-20,-10,-5],['pink','black','green','blue'])">
+                    {{getPriceCal(d.priceCal,'1Y','diffMin')|number:2}}%
+                </td>
+                <td class="text-uppercase">{{d.quote}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

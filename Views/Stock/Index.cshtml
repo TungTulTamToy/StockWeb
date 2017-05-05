@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Stock Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+    <title>Stock Web</title>
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/lib/angular/angular-resource.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/factory/groupFactory.js"></script>
+    <script src="~/js/filters/makeRangeFilter.js"></script>
+    <script src="~/js/filters/displayBlankIfNotExistFilter.js"></script>
+    <script src="~/js/filters/getValueByKeyFilter.js"></script>
+    <script src="~/js/controllers/tabController.js"></script>
+    <script src="~/js/controllers/groupController.js"></script>
+    <script src="~/js/controllers/aboutController.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
+</head>
+<body ng-controller="tabController">
+    <div class="container">
+        <div class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">My Stocks</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{active: activeTab === 'group'}"><a ng-click="activeTab='group'">Group</a></li>
+                        <li ng-class="{active: activeTab === 'about'}"><a ng-click="activeTab='about'">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ng-include="tabTemplates[activeTab]"></div>
+    </div>
+</body>
+</html>
