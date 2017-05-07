@@ -36,6 +36,7 @@
                     <div class="row row10">
                         <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PEG" />PEG</label>
                         <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PEDiff" />PE Diff Percentage</label>
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.MACD" />MACD</label>
                     </div>
                 </div>
             </div>
@@ -72,6 +73,9 @@
                 <th ng-show="show.Price1YCal">Diff Max 1Y</th>
                 <th ng-show="show.Price1YCal">Diff Avg 1Y</th>
                 <th class="borderRight" ng-show="show.Price1YCal">Diff Min 1Y</th>
+                <th ng-show="show.MACD">MACD</th>
+                <th ng-show="show.MACD">Signal</th>
+                <th class="borderRight" ng-show="show.MACD">Hist</th>
                 <th>Quote</th>
             </tr>
         </thead>
@@ -104,6 +108,9 @@
                 <th ng-show="show.Price1YCal">Diff Max 1Y</th>
                 <th ng-show="show.Price1YCal">Diff Avg 1Y</th>
                 <th class="borderRight" ng-show="show.Price1YCal">Diff Min 1Y</th>
+                <th ng-show="show.MACD">MACD</th>
+                <th ng-show="show.MACD">Signal</th>
+                <th class="borderRight" ng-show="show.MACD">Hist</th>
                 <th>Quote</th>
             </tr>
         </tfoot>
@@ -162,6 +169,9 @@
                     ng-class="determineColor(getPriceCal(d.priceCal,'1Y','diffMin'),[-20,-10,-5],['pink','black','green','blue'])">
                     {{getPriceCal(d.priceCal,'1Y','diffMin')|number:2}}%
                 </td>
+                <td ng-show="show.MACD">{{d.movingAverage.macd|number:2}}</th>
+                <td ng-show="show.MACD">{{d.movingAverage.signal|number:2}}</th>
+                <td class="borderRight" ng-show="show.MACD">{{d.movingAverage.hist|number:2}}</th>
                 <td class="text-uppercase">{{d.quote}}</td>
             </tr>
         </tbody>

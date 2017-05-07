@@ -9,7 +9,8 @@ app.controller('groupController', function ($scope, Group,$filter) {
         Price6MCal: true,
         Price1YCal: false,
         PEG: false,
-        PEDiff:false
+        PEDiff:false,
+        MACD: true,
     };
     $scope.debug = function (msg) {
         alert(msg);
