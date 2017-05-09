@@ -53,5 +53,5 @@ app.controller('groupController', function ($scope, Group,$filter) {
     {
         $scope.groups = data.content.name;
     });
-    $scope.selectGroup('Ready');
+    $scope.selectGroup('All');
 });

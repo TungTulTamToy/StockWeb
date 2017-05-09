@@ -7,7 +7,7 @@
         <div class="panel-body container">
             <div class="row form-inline">
                 <span class="col-md-2">Select group</span>
-                <select ng-init="selectedGroupID='Ready'"
+                <select ng-init="selectedGroupID='All'"
                         ng-model="selectedGroupID"
                         ng-options="g as g for g in groups"
                         ng-change="selectGroup(selectedGroupID)"
@@ -171,7 +171,9 @@
                 </td>
                 <td ng-show="show.MACD">{{d.movingAverage.macd|number:2}}</th>
                 <td ng-show="show.MACD">{{d.movingAverage.signal|number:2}}</th>
-                <td class="borderRight" ng-show="show.MACD">{{d.movingAverage.hist|number:2}}</th>
+                <td class="borderRight" 
+                    ng-show="show.MACD"
+                    ng-class="{red:d.movingAverage.hist<0,green:d.movingAverage.hist>0}">{{d.movingAverage.hist|number:2}}</th>
                 <td class="text-uppercase">{{d.quote}}</td>
             </tr>
         </tbody>
