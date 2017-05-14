@@ -38,6 +38,9 @@
                         <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PEDiff" />PE Diff Percentage</label>
                         <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.MACD" />MACD</label>
                     </div>
+                    <div class="row row10">
+                        <label class="col-md-3 checkbox-inline no_indent"><input type="checkbox" ng-model="show.PortCal" />Port Cal</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,6 +79,8 @@
                 <th ng-show="show.MACD">MACD</th>
                 <th ng-show="show.MACD">Signal</th>
                 <th class="borderRight" ng-show="show.MACD">Hist</th>
+                <th class="borderLeft" ng-show="show.PortCal">Min Port</th>
+                <th class="borderRight" ng-show="show.PortCal">Max Port</th>
                 <th>Quote</th>
             </tr>
         </thead>
@@ -111,6 +116,8 @@
                 <th ng-show="show.MACD">MACD</th>
                 <th ng-show="show.MACD">Signal</th>
                 <th class="borderRight" ng-show="show.MACD">Hist</th>
+                <th class="borderLeft" ng-show="show.PortCal">Min Port</th>
+                <th class="borderRight" ng-show="show.PortCal">Max Port</th>
                 <th>Quote</th>
             </tr>
         </tfoot>
@@ -174,6 +181,8 @@
                 <td class="borderRight" 
                     ng-show="show.MACD"
                     ng-class="{red:d.movingAverage.hist<0,green:d.movingAverage.hist>0}">{{d.movingAverage.hist|number:2}}</th>
+                <th class="borderLeft" ng-show="show.PortCal">{{getPortCal(d.portCal.minPriceDiffPercent,2)}}</th>
+                <th class="borderRight" ng-show="show.PortCal">{{getPortCal(d.portCal.maxPriceDiffPercent,2)}}</th>
                 <td class="text-uppercase">{{d.quote}}</td>
             </tr>
         </tbody>

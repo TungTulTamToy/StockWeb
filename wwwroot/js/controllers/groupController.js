@@ -3,14 +3,15 @@
 app.controller('groupController', function ($scope, Group,$filter) {
     $scope.show = {
         PE: true,
-        Growth: true,
+        Growth: false,
         NetProfit: false,
         Price3MCal: false,
         Price6MCal: true,
         Price1YCal: false,
         PEG: false,
-        PEDiff:false,
+        PEDiff: false,
         MACD: true,
+        PortCal: true
     };
     $scope.debug = function (msg) {
         alert(msg);
@@ -48,6 +49,13 @@ app.controller('groupController', function ($scope, Group,$filter) {
     }
     $scope.getPriceCal = function (priceCals, propertyKey, propertyName) {
         return $filter('getValueByKey')(priceCals, 'name', propertyKey, propertyName);
+    }
+    $scope.getPortCal =  function (input, decimals) {
+        if(input == null){
+            return "-";
+        }else{
+            return $filter('number')(input, decimals) + '%';            
+        }
     }
     Group.get(function (data)
     {
